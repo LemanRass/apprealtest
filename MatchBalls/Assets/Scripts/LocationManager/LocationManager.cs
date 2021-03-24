@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Game.Configs;
+using Game.UI.Screens.Location;
 using UnityEngine;
 
 public class LocationManager : MonoBehaviour
@@ -22,7 +23,43 @@ public class LocationManager : MonoBehaviour
     //How many additional balls will be spawned (excluded ballsCountLimit)
     public int ballsSpawnCountLimit = 20;
 
+    #endregion
 
+    #region Collected resources
+
+    public int wood
+    {
+        set
+        {
+            woodCount = value;
+            ScreenManager.Find<LocationScreen>().woodAmountLabel.text = woodCount.ToString();
+        }
+    }
+    private int woodCount = 0;
+
+
+
+    public int stones
+    {
+        set
+        {
+            stonesCount = value;
+            ScreenManager.Find<LocationScreen>().stoneAmountLabel.text = stonesCount.ToString();
+        }
+    }
+    private int stonesCount = 0;
+
+
+
+    public int water
+    {
+        set
+        {
+            waterCount = value;
+            ScreenManager.Find<LocationScreen>().waterAmountLabel.text = waterCount.ToString();
+        }
+    }
+    private int waterCount = 0;
 
     #endregion
 
@@ -32,10 +69,15 @@ public class LocationManager : MonoBehaviour
         Init();
     }
 
-    public void Init()
+    public async void Init()
     {
         ballViews = new List<BallView>();
-        SpawnBalls(ballsCountLimit);
+
+        wood = 0;
+        stones = 0;
+        water = 0;
+
+        await SpawnBalls(ballsCountLimit);
     }
 
     private BallConfig CalculateNextBall()
