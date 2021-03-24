@@ -2,20 +2,35 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DG.Tweening;
+using Game.Configs;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BallView : MonoBehaviour
 {
+    public SpriteRenderer ballImage;
+    public SpriteRenderer resourceIcon;
+
     public CircleCollider2D collider;
     public Rigidbody2D rigidbody;
 
-    public BallType ballType { get; private set; }
+    public BallConfig ballConfig { get; private set; }
+    public ResourceConfig resourceConfig { get; private set; }
 
     public event Action<BallView> onMouseDown = null; 
 
-    public void Init(BallType ballType)
+    public void Init(BallConfig ballConfig, ResourceConfig resourceConfig = null)
     {
-        this.ballType = ballType;
+        this.ballConfig = ballConfig;
+        this.resourceConfig = resourceConfig;
+
+        ballImage.sprite = Resources.Load<Sprite>(ballConfig.icon);
+
+        if(resourceConfig != null)
+        {
+            resourceIcon.sprite = Resources.Load<Sprite>(resourceConfig.icon);
+        }
     }
 
     public List<BallView> GetCollideWith()

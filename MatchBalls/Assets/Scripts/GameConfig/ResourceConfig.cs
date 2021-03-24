@@ -1,9 +1,9 @@
 namespace Game.Configs
 {
-    public class BallConfig
+    public class ResourceConfig
     {
         public int id;
+        public string name;
         public string icon;
-        public string prefab;
     }
 }
