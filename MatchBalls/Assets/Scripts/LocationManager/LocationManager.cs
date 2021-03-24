@@ -34,6 +34,11 @@ public class LocationManager : MonoBehaviour
             woodCount = value;
             ScreenManager.Find<LocationScreen>().woodAmountLabel.text = woodCount.ToString();
         }
+
+        get
+        {
+            return woodCount;
+        }
     }
     private int woodCount = 0;
 
@@ -46,6 +51,11 @@ public class LocationManager : MonoBehaviour
             stonesCount = value;
             ScreenManager.Find<LocationScreen>().stoneAmountLabel.text = stonesCount.ToString();
         }
+
+        get
+        {
+            return stonesCount;
+        }
     }
     private int stonesCount = 0;
 
@@ -57,6 +67,11 @@ public class LocationManager : MonoBehaviour
         {
             waterCount = value;
             ScreenManager.Find<LocationScreen>().waterAmountLabel.text = waterCount.ToString();
+        }
+
+        get
+        {
+            return waterCount;
         }
     }
     private int waterCount = 0;
@@ -132,6 +147,32 @@ public class LocationManager : MonoBehaviour
 
     private async Task DestroyBall(BallView ballView)
     {
+        //Check for resource
+        if(ballView.resourceConfig != null)
+        {
+            switch(ballView.resourceConfig.id)
+            {
+                case 0:
+                    {
+                        wood++;
+                    }
+                    break;
+
+                case 1:
+                    {
+                        stones++;
+                    }
+                    break;
+
+                case 2:
+                    {
+                        water++;
+                    }
+                    break;
+            }
+        }
+
+
         await ballView.Explode();
         ballView.onMouseDown -= OnBallClicked;
         ballViews.Remove(ballView);
